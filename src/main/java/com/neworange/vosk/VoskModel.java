@@ -11,7 +11,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * vosk模型加载
+ * vosk模型加载 语音识别 https://alphacephei.com/vosk/models
+ * 模型下载地震  https://alphacephei.com/vosk/models/vosk-model-small-cn-0.22.zip
  * @author zhou
  */
 public class VoskModel {

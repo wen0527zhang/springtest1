@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neworange.dao.CityDao">
+
+    <insert id="addCitys">
+       insert into t_city (city_id,area_id,area_name,twonship_id,village_name,province_id,province_name,city_name,twonship_name,village_id,province)  values
+        <foreach collection="cachedDataList" item="item" separator="," >
+           ( #{item.cityId},
+            #{item.areaId},
+            #{item.areaName},
+            #{item.twonshipId},
+            #{item.villageName},
+            #{item.provinceId},
+            #{item.provinceName},
+            #{item.cityName},
+            #{item.twonshipName},
+            #{item.villageId},
+             #{item.province})
+        </foreach>
+
+    </insert>
+    <insert id="addAreas">
+        insert into t_organization_all (code,name,parent_code,level,longitude,latitude)  values
+        <foreach collection="areaList" item="item" separator="," >
+            (#{item.code},
+            #{item.name},
+            #{item.parentCode},
+            #{item.level},
+            #{item.longitude},
+            #{item.latitude})
+        </foreach>
+    </insert>
+    <update id="updateVillageGetPoint">
+        <foreach collection="list" item="item" separator=";" >
+            UPDATE t_organization
+            <set>
+                <if test="item.longitude != null">
+                    longitude= #{item.longitude},
+                </if>
+                <if test="item.latitude != null">
+                    latitude=#{item.latitude},
+                </if>
+            </set>
+            where code = #{item.villageId}
+
+        </foreach>
+    </update>
+    <select id="selectBatchIds" resultType="com.neworange.entity.City">
+        SELECT CONCAT(province_id,'000000') as provinceId,province_name as provinceName FROM t_city GROUP BY province_id,province_name
+    </select>
+
+    <select id="selectBatchId2" resultType="com.neworange.entity.Area">
+        SELECT city_id as code,city_name as name ,CONCAT(province_id,'000000') as parentCode FROM `t_city` GROUP BY city_id,city_name,province_id
+    </select>
+    <select id="selectAreaId" resultType="com.neworange.entity.Area">
+        SELECT area_id as code,area_name as name,city_id as parentCode FROM `t_city` GROUP BY area_id,area_name,city_id
+    </select>
+    <select id="selectTwonshipId" resultType="com.neworange.entity.Area">
+        SELECT twonship_id as code,twonship_name as name,IFNULL(area_id,city_id) as parentCode FROM `t_city` GROUP BY twonship_id,twonship_name,area_id,city_id
+    </select>
+    <select id="selectVillageId" resultType="com.neworange.entity.Area">
+        SELECT village_id as code,village_name as name,twonship_id as parentCode FROM `t_city` GROUP BY village_id,village_name,twonship_id
+    </select>
+    <select id="selectVillageName" resultType="com.neworange.entity.VillageName">
+        SELECT village_id as villageId,village_name as villageName,longitude,latitude  FROM t_village
+    </select>
+</mapper>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script th:src="@{webjars/jquery/3.5.1/jquery.js}"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+    <h1>Device Login</h1>
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Please input the username and password to login the device</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <label>IP</label>
+                <input class="form-control" name="IP" type="text" value="10.8.98.44">
+            </div>
+            <div class="form-group">
+                <label>port</label>
+                <input class="form-control" name="port" type="text" value="80">
+            </div>
+            <div class="form-group">
+                <label>username</label>
+                <input class="form-control" name="username" type="text" value="admin">
+            </div>
+            <div class="form-group">
+                <label>password</label>
+                <input class="form-control" name="password" type="password" value="abcd1234">
+            </div>
+            <div class="form-group">
+                <label>https</label>
+                <input type="checkbox" name="httpsEnable" value="httpsEnable" onclick="setPort()">
+            </div>
+
+            <button class="btn btn-default btn-lg" onclick="LoginSubmit()" type="button">Login</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function LoginSubmit()
+    {
+        var username = $("input[name=username]").val();
+        var password = $("input[name=password]").val();
+        var IP = $("input[name=IP]").val();
+        var port = $("input[name=port]").val();
+        var httpsEnalbe = $("input[name=httpsEnable]").is(":checked");
+        $.ajax(
+        {
+        url: '/getLogin',
+        type: 'get',
+        data:{
+            username:username,
+            password:password,
+            IP:IP,
+            port:port,
+            httpsEnalbe:httpsEnalbe
+        },
+        success:function(data)
+        {
+            if (data == "success")
+            {
+                alert("Login succeeded")
+                window.location.replace("/mainPage");
+            }
+            else
+                alert(data)
+        },
+        error:function()
+        {
+            alert("Login failed ! Please check!");
+        }
+        })
+    }
+
+    //设置port
+    function setPort(){
+        var isHttps= $("input[name=httpsEnable]").is(":checked");
+        if(isHttps){
+            //如果是https
+            $("input[name=port]").val("443");
+        }
+        else{
+            //如果是http
+            $("input[name=port]").val("80");
+        }
+    }
+</script>
+</body>
+</html>
+

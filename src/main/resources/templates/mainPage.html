@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<script th:src="@{webjars/jquery/3.5.1/jquery.js}"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Guard</title>
+</head>
+<body>
+<h1>Device Guard</h1>
+
+<div class="form-group">
+    <label>start_Guard</label>
+    <button class="btn btn-default btn-lg" onclick="start_Guard()" type="button">start_Guard</button>
+</div>
+
+<div class="form-group">
+    <label>stop_Guard</label>
+    <button class="btn btn-default btn-lg" onclick="stop_Guard()" type="button">stop_Guard</button>
+</div>
+
+<h1>Personnel Distribution</h1>
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <div class="form-group">
+            <label>employeeNo</label>
+            <input class="form-control" name="employeeNo" type="text" value="hik00001">
+        </div>
+        <div class="form-group">
+            <label>employeeName</label>
+            <input class="form-control" name="employeeName" type="text" value="">
+        </div>
+        <div class="form-group">
+            <label>cardNo</label>
+            <input class="form-control" name="cardNo" type="text" value="HZ20220001">
+        </div>
+
+        <div class="form-group">
+            <label>faceUrl</label>
+            <input class="form-control" name="faceUrl" type="text" value=""
+                   style="width: 500px;">
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-default btn-lg" onclick="employeeSubmit()" type="button">submit</button>
+        </div>
+
+    </div>
+</div>
+<script>
+    function start_Guard()
+    {
+        $.ajax(
+        {
+        url: '/start_Guard',
+        type: 'get',
+        data:{},
+        success:function(data)
+        {
+            alert(data);
+        },
+        error:function()
+        {
+            alert("start Guard failed");
+        }
+        })
+    }
+
+    function stop_Guard()
+    {
+        $.ajax(
+        {
+        url: '/stop_Guard',
+        type: 'get',
+        data:{},
+        success:function(data)
+        {
+            alert(data);
+        },
+        error:function()
+        {
+            alert("stop Guard failed");
+        }
+        })
+    }
+
+    function employeeSubmit()
+    {
+        var employeeNo = $("input[name=employeeNo]").val();
+        var employeeName = $("input[name=employeeName]").val();
+        var cardNo = $("input[name=cardNo]").val();
+        var faceUrl = $("input[name=faceUrl]").val();
+        $.ajax(
+        {
+        url: '/employee',
+        type: 'get',
+        data:{
+            employeeNo:employeeNo,
+            employeeName:employeeName,
+            cardNo:cardNo,
+            faceUrl:faceUrl,
+        },
+        success:function(data)
+        {
+            if (data)
+            {
+                alert(data)
+                //window.location.replace("/mainPage");
+            }
+            else
+                alert("Personnel Distribution Failed")
+        },
+        error:function()
+        {
+            alert("Personnel Distribution Failed ! Please check!");
+        }
+        })
+
+    }
+</script>
+</body>
+</html>

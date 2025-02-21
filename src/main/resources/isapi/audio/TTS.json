@@ -1,0 +1,7 @@
+{
+  "command": "start",
+  "TTSContent": "${TTSContent}",
+  "audioLevel": 0,
+  "audioVolume": 5,
+  "audioOutID": [1]
+}

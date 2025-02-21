@@ -1,0 +1,45 @@
+{
+  "terminalInfoList": [{
+    "terminalID": 1,
+    "audioOutID": [1]
+  }],
+  "broadcastPlanSchemeList": [{
+    "planSchemeID": "${planSchemeID1}",
+    "enabled": true,
+    "dailyScheduleInfo": {
+      "startTime": "${startTime1}",
+      "stopTime": "${stopTime1}",
+      "dailyScheduleList": [{
+        "beginTime": "${beginTime1}",
+        "endTime": "${endTime1}",
+        "playNowTime": "",
+        "playMode": "${playMode1}",
+        "operation": {
+          "audioSource": "customAudio",
+          "customAudioID": [1],
+          "audioLevel": 5,
+          "audioVolume": 100
+        }
+      }]
+    }
+  }, {
+    "enabled":false,
+    "planSchemeID": "${planSchemeID2}",
+    "dailyscheduleInfo": {
+      "startTime": "${startTime2}",
+      "stopTime": "${stopTime2}",
+      "dailyScheduleList": [{
+        "beginTime": "${beginTime2}",
+        "endTime": "${endTime2}",
+        "playMode": "${playMode2}",
+        "operation": {
+          "audioSource": "speechSynthesis",
+          "speechSynthesisContent": "${speechSynthesisContent2}",
+          "audioLevel": 5,
+          "voiceType": "male",
+          "audioVolume": 100
+        }
+      }]
+    }
+  }]
+}
